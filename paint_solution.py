@@ -26,7 +26,7 @@ class Paint(object):
         self.save_button = Button(self.root, text='save', command=self.save)
         self.save_button.grid(row=0, column=4)
 
-        self.choose_size_button = Scale(self.root, from_=1, to=20, orient=HORIZONTAL)
+        self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
         self.choose_size_button.grid(row=0, column=5)
 
         self.c = Canvas(self.root, bg='white', width=800, height=600)

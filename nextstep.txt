@@ -1,0 +1,22 @@
+1) add a save button
+
+        self.save_button = Button(self.root, text='save', command=self.save)
+        self.save_button.grid(row=0, column=4)
+        
+2) increase range of thickness 
+
+        self.choose_size_button = Scale(self.root, from_=1, to=20, orient=HORIZONTAL)
+        
+3) modify the locations of other buttons/canvas. Increase size of window
+
+e.g
+        self.c = Canvas(self.root, bg='white', width=800, height=600)
+        self.c.grid(row=1, columnspan=6)
+
+
+4) add save functionality 
+
+   def save(self):
+    	filename = asksaveasfilename() 
+    	self.c.update()
+    	self.c.postscript(file=filename, colormode='color')
