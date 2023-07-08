@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter.colorchooser import askcolor
-
+from tkinter.filedialog import asksaveasfilename
 
 class Paint(object):
 
@@ -21,12 +21,15 @@ class Paint(object):
 
         self.eraser_button = Button(self.root, text='eraser', command=self.use_eraser)
         self.eraser_button.grid(row=0, column=3)
+        
+        self.save_button = Button(self.root, text='save', command=self.save)
+        self.save_button.grid(row=0, column=4)
 
-        self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
-        self.choose_size_button.grid(row=0, column=4)
+        self.choose_size_button = Scale(self.root, from_=1, to=20, orient=HORIZONTAL)
+        self.choose_size_button.grid(row=0, column=5)
 
         self.c = Canvas(self.root, bg='white', width=600, height=600)
-        self.c.grid(row=1, columnspan=5)
+        self.c.grid(row=1, columnspan=6)
 
         self.setup()
         self.root.mainloop()
@@ -59,6 +62,11 @@ class Paint(object):
         some_button.config(relief=SUNKEN)
         self.active_button = some_button
         self.eraser_on = eraser_mode
+
+    def save(self):
+        filename = asksaveasfilename() 
+        self.c.update()
+        self.c.postscript(file=filename, colormode='color')
 
     def paint(self, event):
         self.line_width = self.choose_size_button.get()
