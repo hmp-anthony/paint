@@ -36,6 +36,7 @@ class Paint(object):
         self.centre_x = 0
         self.centre_y = 0
         self.radius = 0
+        self.done = False
 
         self.c = Canvas(self.root, bg='white', width=800, height=600)
         self.c.grid(row=1, columnspan=6)
@@ -58,9 +59,11 @@ class Paint(object):
 
     def use_pen(self):
         self.activate_button(self.pen_button)
+        self.circle_on = False
 
     def use_brush(self):
         self.activate_button(self.brush_button)
+        self.circle_on = False
 
     def choose_color(self):
         self.eraser_on = False
@@ -101,27 +104,31 @@ class Paint(object):
             if(self.clicks == 0):
                 self.centre_x = event.x;
                 self.centre_y = event.y;
-                print("C")
-                print(self.centre_x, self.centre_y)
+                self.radius = 0
 
             if(self.clicks == 1):
                 self.radius = math.sqrt((self.centre_x - event.x) ** 2 
                                        +(self.centre_y - event.y) ** 2)
-                print("R")
-                print(self.radius)
 
-            self.clicks = 1
+                self.line_width = self.choose_size_button.get()
+                paint_color = 'white' if self.eraser_on else self.color
 
-            self.line_width = self.choose_size_button.get()
-            paint_color = 'white' if self.eraser_on else self.color
-            two_pi = 2 * math.pi
-            for i in range(0,100):
-                self.c.create_line(self.centre_x + self.radius * math.cos(two_pi * i / 100 ),
-                                   self.centre_y + self.radius * math.sin(two_pi * i / 100),
-                                   self.centre_x + self.radius * math.cos(two_pi * (i+1) / 100),
-                                   self.centre_y + self.radius * math.sin(two_pi * (i+1) / 100),
-                                    width=self.line_width, fill = paint_color,
-                                    capstyle=ROUND, smooth=TRUE,splinesteps=36)
+                two_pi = 2 * math.pi
+                for i in range(0,50):
+                    self.c.create_line(self.centre_x + self.radius * math.cos(two_pi * i / 50),
+                                       self.centre_y + self.radius * math.sin(two_pi * i / 50),
+                                       self.centre_x + self.radius * math.cos(two_pi * (i+1) / 50),
+                                       self.centre_y + self.radius * math.sin(two_pi * (i+1) / 50),
+                                       width=self.line_width, fill = paint_color,
+                                       capstyle=ROUND, smooth=TRUE,splinesteps=36)
+
+                self.done = True
+
+            if(self.done == True):
+                self.clicks = 0
+                self.done = False
+            else:
+                self.clicks = 1
 
             self.centre_x = event.x
             self.centre_y = event.y
