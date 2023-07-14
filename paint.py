@@ -38,8 +38,8 @@ class Paint(object):
         self.radius = 0
         self.done = False
 
-        self.c = Canvas(self.root, bg='white', width=800, height=600)
-        self.c.grid(row=1, columnspan=6)
+        self.c = Canvas(self.root, bg='white', width=1000, height=800)
+        self.c.grid(row=1, columnspan=7)
 
         self.setup()
         self.root.mainloop()
